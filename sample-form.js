@@ -37,15 +37,15 @@ const generateSignedUrl = (requestUrl, requestBody, registrationKey) => {
     const requestBodyHash = crypto.createHash('sha256').update(requestBody).digest('hex');
     const stringToSign = `${requestTimestamp}\n${requestUrl}\n${canonicalQueryString}\n${requestBodyHash}`;
 
-    // // Generate the signing key
+    // Generate the signing key
     let hmac = crypto.createHmac('sha256', registrationKey);
     const signingKey = hmac.update(requestTimestamp).digest();
 
-    // // Generate request signature
+    // Generate request signature
     hmac = crypto.createHmac('sha256', signingKey);
     const signature = hmac.update(stringToSign).digest('hex');
 
-    // // Generate the signed URL
+    // Generate the signed URL
     const signatureParam = `X-Sig-Signature=${signature}`;
     return `${requestUrl}?${algorithmParam}&${dateParam}&${signatureParam}`;
 };
@@ -60,7 +60,7 @@ app.post('/process', textParser, function (req, res) {
   const form = querystring.parse(req.body);
   const signedUrl = generateSignedUrl(form.redirectUrl, req.body, registrationKey);
   res.set('Location', signedUrl);
-res.status(307).end();
+  res.status(307).end();
 });
 
 module.exports = Webtask.fromExpress(app);
