@@ -6,24 +6,13 @@ const app = Express();
 const bodyParser = require('body-parser');
 const querystring = require('querystring');
 const crypto = require('crypto');
+const rp = require('request-promise');
 
 const urlencodedParser = bodyParser.urlencoded({ extended: true });
 const textParser = bodyParser.text({ type: '*/*' });
 
-const view = (function view() {/*
-  <html>
-    <body>
-      <form action="process" method="post">
-        <input name="redirectUrl" type="hidden" value="<%= redirectUrl %>"/>
-        <div>Series Title: <input name="series-title" type="text"/></div>
-        <div>Episode Title: <input name="Episode-title" type="text"/></div>
-        <button type="submit">Submit</button>
-      </form>
-    </body>
-  </html>
-*/}).toString().match(/[^]*\/\*([^]*)\*\/\s*\}$/)[1];
-
-const registrationKey = '<Insert Metadata Registration Key>';
+const registrationKey = '<Media Shuttle Metadata Registration Key>';
+const formUrl = '<URL to HTML document with form>';
 
 const generateSignedUrl = (requestUrl, requestBody, registrationKey) => {
     const requestTimestamp = new Date().toISOString();
@@ -51,9 +40,15 @@ const generateSignedUrl = (requestUrl, requestBody, registrationKey) => {
 };
 
 app.use('/form', urlencodedParser, function (req, res) {
-  res.send(require('ejs').render(view, {
-    redirectUrl: req.body.redirectUrl 
-  }));
+  rp.get(formUrl)
+    .then(form => {
+      res.send(require('ejs').render(form, {
+        redirectUrl: req.body.redirectUrl 
+      }));
+    })
+    .catch(err => {
+      res.status(500).send(err.message).end();
+    });
 });
 
 app.post('/process', textParser, function (req, res) {
