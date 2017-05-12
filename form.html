@@ -34,8 +34,8 @@
 </head>
 <body>
 <p class="lead">Upload Details</p>
-<form class="form-horizontal" role="form" action="${it.action}" method="post">
-    <input type="hidden" name="redirectUrl" value="${it.redirectUrl}"/>
+<form class="form-horizontal" action="process" method="post">
+    <input name="redirectUrl" type="hidden" value="<%= redirectUrl %>"/>
     <div class="form-group">
         <label for="seriesTitle" class="col-xs-3 control-label">Series Title</label>
         <div class="col-xs-9">
