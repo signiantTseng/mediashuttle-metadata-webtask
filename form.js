@@ -39,7 +39,7 @@ const generateSignedUrl = (requestUrl, requestBody, registrationKey) => {
     return `${requestUrl}?${algorithmParam}&${dateParam}&${signatureParam}`;
 };
 
-app.use('/form', urlencodedParser, function (req, res) {
+app.use('/show', urlencodedParser, function (req, res) {
   rp.get(formUrl)
     .then(form => {
       res.send(require('ejs').render(form, {
