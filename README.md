@@ -15,8 +15,8 @@ You can access your webtask at the following url:
 
 https://wt-2117b4787cc0e883d5d156f357f376fa-0.run.webtask.io/form
 ```
-Then set the Metadata provider URL in the Media Shuttle portal admin console to the /show path under the URL assigned to your webtask:
+In the Media Shuttle Management Console set the Media Shuttle metadata provider URL to the URL above with the /show added. For example, using the URL above, the Media Shuttle metadata provider URL is: https://wt-2117b4787cc0e883d5d156f357f376fa-0.run.webtask.io/form/show.
 
-Using the above webtask url as an example, the Metadata provider URL would be:
 
-https://wt-2117b4787cc0e883d5d156f357f376fa-0.run.webtask.io/form/show
+
+
